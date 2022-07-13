@@ -24,7 +24,7 @@ namespace academymanagement.Infra.Data.Configurations
                 .IsRequired();
 
             builder.Property(p => p.IsEnabled)
-                .HasColumnType("BIT");
+                .HasColumnType("bit");
 
             builder.HasOne(o => o.UserGroup)
                 .WithMany(x => x.Users)

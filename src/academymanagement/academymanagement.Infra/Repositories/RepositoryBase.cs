@@ -1,4 +1,5 @@
-﻿using academymanagement.Domain.Interfaces.Repositories;
+﻿using academymanagement.Domain.Commons.Filters;
+using academymanagement.Domain.Interfaces.Repositories;
 using academymanagement.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,13 @@ namespace academymanagement.Infra.Repositories
             return await _context.Set<T>().FindAsync(id);
         }
 
+        public async Task<IEnumerable<T>> FindAsync(PaginationFilter filter)
+        {
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
 
+            return await _context.Set<T>().Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+               .Take(validFilter.PageSize)
+               .ToListAsync();
+        }
     }
 }

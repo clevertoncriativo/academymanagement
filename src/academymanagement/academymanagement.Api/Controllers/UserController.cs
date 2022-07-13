@@ -1,6 +1,7 @@
 ﻿using academymanagement.Application.Interfaces;
 using academymanagement.Domain.Entities;
 using academymanagement.Domain.Messages;
+using academymanagement.Domain.Messages.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

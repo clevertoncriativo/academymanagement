@@ -13,6 +13,12 @@ namespace academymanagement.Domain.Validators
                .WithSeverity(Severity.Error)
                .WithMessage("O nome do é usuário é obrigatório.");
 
+
+            this.RuleFor(r => r.UserGroupId)
+               .NotEmpty()               
+               .WithErrorCode("USER-002")
+               .WithSeverity(Severity.Error)
+               .WithMessage("O grupo de usuário é obrigatório.");
         }
     }
 }
