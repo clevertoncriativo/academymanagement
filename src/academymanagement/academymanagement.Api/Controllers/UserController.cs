@@ -1,12 +1,8 @@
 ﻿using academymanagement.Application.Interfaces;
 using academymanagement.Domain.Entities;
-using academymanagement.Domain.Messages;
 using academymanagement.Domain.Messages.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace academymanagement.Api.Controllers
@@ -29,10 +25,10 @@ namespace academymanagement.Api.Controllers
         {
             var result = await _userApp.FindByIdAsync(id);
 
-            if (result?.Model == null)
+            if (result?.Data == null)
                 return NotFound();
 
-            return Ok(result?.Model);
+            return Ok(result?.Data);
         }
 
         [HttpDelete("{id}")]
@@ -45,10 +41,10 @@ namespace academymanagement.Api.Controllers
 
             var result = await _userApp.FindByIdAsync(id);
 
-            if (result?.Model == null)
+            if (result?.Data == null)
                 return NotFound();
 
-            var response = await _userApp.DeleteAsync(result.Model);
+            var response = await _userApp.DeleteAsync(result.Data);
 
             if (!response.Succeeded)
                 return this.UnprocessableEntity(result);
@@ -67,7 +63,7 @@ namespace academymanagement.Api.Controllers
             if (!result.Succeeded)
                 return this.UnprocessableEntity(result);
 
-            return CreatedAtAction(nameof(FindById), new { id = result?.Model?.Id }, result?.Model);
+            return CreatedAtAction(nameof(FindById), new { id = result.Data.Id }, result.Data);
         }
 
         [HttpPut("{id}")]
@@ -87,10 +83,10 @@ namespace academymanagement.Api.Controllers
 
             var result = await _userApp.SaveAsync(user);
 
-            if (!result.Succeeded || result.Model == null)
+            if (!result.Succeeded)
                 return this.UnprocessableEntity(result);
 
-            return CreatedAtAction(nameof(FindById), new { id = result.Model.Id }, result.Model);
+            return CreatedAtAction(nameof(FindById), new { id = result.Data.Id }, result.Data);
         }
     }
 }

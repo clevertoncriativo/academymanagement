@@ -41,6 +41,8 @@ namespace academymanagement.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDatabaseConfiguration();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
