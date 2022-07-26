@@ -3,9 +3,6 @@ using academymanagement.Domain.Entities;
 using academymanagement.Domain.Messages.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace academymanagement.Api.Controllers
@@ -54,6 +51,42 @@ namespace academymanagement.Api.Controllers
 
             return Ok();
 
+        }
+
+        [HttpPost("userGroup")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ResponseMessage<UserGroup>>> PostAsync([FromBody] UserGroup userGroup)
+        {
+            var result = await _userGroupApp.SaveAsync(userGroup);
+
+            if (!result.Succeeded)
+                return this.UnprocessableEntity(result);
+
+            return CreatedAtAction(nameof(FindById), new { id = result.Data.Id }, result.Data);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ResponseMessage<UserGroup>>> Put(int id, [FromBody] UserGroup userGroup)
+        {
+            if (id == 0)
+                return BadRequest();
+
+            var _userGroup = await _userGroupApp.FindByIdAsync(id);
+
+            if (!_userGroup.Succeeded)
+                return this.UnprocessableEntity(_userGroup);
+
+            userGroup.Id = id;
+
+            var result = await _userGroupApp.SaveAsync(userGroup);
+
+            if (!result.Succeeded)
+                return this.UnprocessableEntity(result);
+
+            return CreatedAtAction(nameof(FindById), new { id = result.Data.Id }, result.Data);
         }
     }
 }

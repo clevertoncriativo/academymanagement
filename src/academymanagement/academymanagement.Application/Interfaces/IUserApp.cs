@@ -1,5 +1,6 @@
 ﻿using academymanagement.Domain.Commons.Filters;
 using academymanagement.Domain.Entities;
+using academymanagement.Domain.Messages;
 using academymanagement.Domain.Messages.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,5 +13,6 @@ namespace academymanagement.Application.Interfaces
         Task<ResponseMessage<bool>> DeleteAsync(User user);
         Task<ResponseMessage<User>> FindByIdAsync(int id);
         Task<ResponseMessage<IEnumerable<User>>> FindAsync(PaginationFilter filter);
+        Task<ResponseMessage<UserAutenticatedMessage>> AutenticateAsync(User user);
     }
 }

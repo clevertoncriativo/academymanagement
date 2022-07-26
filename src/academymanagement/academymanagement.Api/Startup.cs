@@ -24,6 +24,8 @@ namespace academymanagement.Api
         {
             services.AddControllers();
 
+            services.AddJwtTConfiguration(Configuration);
+
             services.AddApplication(Configuration);
 
             services.AddDomain(Configuration);
@@ -47,9 +49,11 @@ namespace academymanagement.Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthorization();            
 
             app.UseSwaggerConfiguration();
+
+            app.UseJwtConfiguration();
 
             app.UseEndpoints(endpoints =>
             {

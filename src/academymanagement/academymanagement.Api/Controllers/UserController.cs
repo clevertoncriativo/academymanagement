@@ -1,5 +1,6 @@
 ﻿using academymanagement.Application.Interfaces;
 using academymanagement.Domain.Entities;
+using academymanagement.Domain.Messages;
 using academymanagement.Domain.Messages.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,14 @@ namespace academymanagement.Api.Controllers
         public UserController(IUserApp userApp)
         {
             _userApp = userApp;
+        }
+
+        [HttpGet("autenticate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<User>> AutentucateUser([FromBody] UserMessage userMessage)
+        {
+            return Unauthorized();
         }
 
         [HttpGet("{id}")]

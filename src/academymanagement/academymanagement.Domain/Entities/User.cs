@@ -1,4 +1,5 @@
 ﻿using academymanagement.Domain.Entities.Base;
+using System.Collections.Generic;
 
 namespace academymanagement.Domain.Entities
 {
@@ -10,5 +11,6 @@ namespace academymanagement.Domain.Entities
         public bool IsEnabled { get; set; } = false;
         public int UserGroupId { get; set; }
         public UserGroup UserGroup { get; set; }
+        public ICollection<UserRole> Roles { get; set; }        
     }
 }
